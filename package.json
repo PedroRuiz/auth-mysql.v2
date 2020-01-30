@@ -4,7 +4,7 @@
   "description": "jwt-uuid-apikey token authorization system using mariadb",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon src/index.js"
   },
   "keywords": [
     "jwt",
@@ -22,5 +22,9 @@
     "jsonwebtoken": "^8.5.1",
     "mariadb": "^2.1.5",
     "uuid-apikey": "^1.4.6"
+  },
+  "devDependencies": {
+    "morgan": "^1.9.1",
+    "nodemon": "^2.0.2"
   }
 }
