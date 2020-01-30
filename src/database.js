@@ -17,3 +17,5 @@ pool.getConnection()
     console.log('*** Database connection error ***')
     throw new Error(err)
   })
+
+module.exports = pool
