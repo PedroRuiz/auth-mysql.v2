@@ -1,0 +1,26 @@
+{
+  "name": "auth-mysql.v2",
+  "version": "2.0.0",
+  "description": "jwt-uuid-apikey token authorization system using mariadb",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "jwt",
+    "uuid",
+    "apikey",
+    "token",
+    "authorization",
+    "mariadb"
+  ],
+  "author": "@pedroruizhidalg",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mariadb": "^2.1.5",
+    "uuid-apikey": "^1.4.6"
+  }
+}
