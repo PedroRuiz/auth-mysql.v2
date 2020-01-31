@@ -17,40 +17,35 @@ router.get('/', (req,res) => {
 
 router.post('/signup', async (req,res) => {
   
-  
-  const {username,email,password,startdate,enddate} = req.body
+  const {applicationkey,username,email,password,startdate,enddate} = req.body
   const {apiKey,uuid} = await apikey.getNewPair()
   const salt = await bcrypt.genSalt(10)
   const cryptedPassword = bcrypt.hashSync(password,salt)
       
-  pool.getConnection()
-    .then(async conn => {
-      await conn.query(
-        'INSERT INTO apiusers(username,email,password,uuid,apikey,startdate,enddate,active) VALUES(?,?,?,?,?,?,?,?)',
-        [username,email,cryptedPassword,uuid,apiKey,startdate,enddate,true]
-      )
-        .then(user => {
-          conn.release()
-          const token = jwt.sign(
-            {id: uuid},
-            process.env.SECRET,
-            {expiresIn: 60*60*23 }
-          )
+  try {
+    const conn = await pool.getConnection()
+    const user = conn.query(
+      'INSERT INTO apiusers(applicationkey,username,email,password,uuid,apikey,startdate,enddate,active) VALUES((select idapplications from applications where apikey = ?),?,?,?,?,?,?,?,?)',
+      [applicationkey,username,email,cryptedPassword,uuid,apiKey,startdate,enddate,true]
+    )
 
-            res.status(200).json({
-              apiKey,
-              token
-            })
-        })
-        .catch( err => {
-          res.json(err)
-        })
-    })
-    .catch( err => {
-      throw new Error(err)
-    })
-  
+    conn.release()
 
+    const token = jwt.sign(
+      {id: uuid},
+      process.env.SECRET,
+      {expiresIn: 60*60*23 }
+    )
+
+    res.status(200).json({
+      apiKey,
+      token
+    })
+
+  } catch( err )
+  {
+    res.send("*** E R R O R ***\n"+err)
+  }
 })
 
 router.post('/signin', verifyToken, async (req,res) => {
