@@ -9,6 +9,9 @@ const httpErrors = require('../http-errors')
 const pool = require('../database')
 const apikey = require('../uuid-apikey')
 const verifyToken = require('./verifyToken')
+const checkApiKeys = require('./checkApiKeys')
+const checkUUID = require('./checkUUID')
+
 
 
 router.get('/', (req,res) => {
@@ -34,11 +37,11 @@ router.post('/signup', async (req,res) => {
     const token = jwt.sign(
       {id: uuid},
       process.env.SECRET,
-      {expiresIn: 60*60*23 }
+      {expiresIn: 60*60*24 }
     )
 
     res.status(200).json({
-      apiKey,
+      uuid,
       token
     })
 
@@ -48,8 +51,92 @@ router.post('/signup', async (req,res) => {
   }
 })
 
-router.post('/signin', verifyToken, async (req,res) => {
-  res.send('estoy aquí')
+router.post('/signin',checkUUID, async (req,res) => {
+
+  try {
+    const { appkey,uuid } = req.body
+  
+    const conn = await pool.getConnection()
+    user = await conn.query(
+      'SELECT u.*, a.* FROM apiusers u, applications a WHERE u.applicationkey = a.idapplications AND u.uuid = ? AND a.apikey = ?',
+      [uuid,appkey]
+    )
+
+    if( user[0] !== undefined )
+    {
+      const token = jwt.sign(
+        {id: user[0].uuid},
+        process.env.SECRET,
+        {expiresIn: 60*60*24 }
+      )
+      res.status(202).json({
+        token
+      })
+    }
+    else
+    {
+      res.status(404).json({
+        "type" : "Client error responses",
+        "code" : "404",
+        "message" : "Not found",
+      })
+    }
+  
+  
+  } catch( e ) {
+    res.status(500).json(e)
+  }
+})
+
+router.post('/signinwithemailpassword', async (req,res) => {
+  const { appkey, email, password } = req.body
+
+  try {
+    const conn = await pool.getConnection()
+    user = await conn.query(
+      'SELECT u.*, a.* from apiusers u, applications a WHERE u.applicationkey = a.idapplications AND u.email = ? AND a.apikey = ?',
+      [email,appkey], 
+    )
+
+    if( user[0] !== undefined )
+    {
+      if( bcrypt.compareSync(password,user[0].password) )
+      {
+        const token = jwt.sign(
+          {id: user[0].uuid},
+          process.env.SECRET,
+          {expiresIn: 60*60*24 }
+        )
+        res.status(202).json({
+          uuid: user[0].uuid,
+          token
+        })
+      }
+      else 
+      {
+        res.status(404).json({
+          "type" : "Client error responses",
+          "code" : "404",
+          "message" : "Not found",
+        })
+      }
+    }
+    else
+    {
+      res.status(404).json({
+        "type" : "Client error responses",
+        "code" : "404",
+        "message" : "Not found",
+      })
+    }
+
+    
+  } catch( e )
+  {
+    res.status(500).json(e)
+  }
+
+  
 })
 
 
