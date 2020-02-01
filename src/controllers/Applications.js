@@ -4,12 +4,44 @@ const router = Router()
 
 const pool = require('../database')
 const apikey = require('../uuid-apikey')
+const checkApiKey = require('./checkApiKeys')
 
 router.get('/', (req,res,next) => {
   res.status(418).send("I'm waiting for the manual")
 })
 
-router.post('/create/',async (req,res) => {
+router.get('/application/:appkey', checkApiKey , async (req,res) => {
+  const { appkey } = req.params
+
+  try {
+    
+    const conn = await pool.getConnection()
+    const application = await conn.query("SELECT apikey,name,create_time,end_time,active FROM applications WHERE apikey = ? and active = 1",[appkey])
+    conn.release()
+    if(application[0] !== undefined)
+    {
+      res.status(200).json(application[0])
+    }
+    else 
+    {
+      res.status(404).json({
+        "type" : "Client error responses",
+        "code" : "404",
+        "message" : "Not found",
+      })
+    }
+
+    
+    
+
+  } catch( e ) {
+    res.send('****** error *********\n'+e)
+  } 
+
+  
+})
+
+router.post('/create/', async (req,res) => {
   
   try {
     const { name } = req.body
