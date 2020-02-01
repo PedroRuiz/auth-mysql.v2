@@ -1,9 +1,9 @@
-#Auth-mysql v2.0.0
+# Auth-mysql v2.0.0
 By @pedroruizhidalg
 
 ---
 
-##Abstract
+## Abstract
 This is a very effective and complete application to manage users of a given application. You can even manage more than one application, each with respective users. A user, identified by email, can appear in several applications, but as different users.
 
 ##Routes
@@ -17,7 +17,7 @@ This is a very effective and complete application to manage users of a given app
 |/signwithemailpassword | POST | {appkey,email,password} | {uuid,token} |
 |/checktoken | POST | {token} | {checktoken: true} |
 
-##Headers
+## Headers
 Headers management is very simple: Each one bust contain, other way 
 ~~~
 Content-Type: application/json
