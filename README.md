@@ -18,7 +18,7 @@ This is a very effective and complete application to manage users of a given app
 |/checktoken | POST | {token} | {checktoken: true} |
 
 ## Headers
-Headers management is very simple: Each one bust contain, other way 
+Headers management is very simple: Each one bust contain:
 ~~~
 Content-Type: application/json
 ~~~
