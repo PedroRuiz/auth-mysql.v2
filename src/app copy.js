@@ -13,5 +13,6 @@ process.env.SECRET  = 'the very super secret token to enforce encryption',
 process.env.DATABASE  = 'yourdatabase'
 
 app.use( require('./controllers/authController') )
+app.use('/apps/', require('./controllers/Applications'))
 
 module.exports = app
