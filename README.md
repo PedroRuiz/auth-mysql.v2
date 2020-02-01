@@ -6,7 +6,7 @@ By @pedroruizhidalg
 ## Abstract
 This is a very effective and complete application to manage users of a given application. You can even manage more than one application, each with respective users. A user, identified by email, can appear in several applications, but as different users.
 
-##Routes
+## Routes
 
 | Routes        | Method | Request                | Successfull result     |
 |---------------|--------|------------------------|------------------------|
