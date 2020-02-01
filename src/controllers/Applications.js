@@ -4,7 +4,8 @@ const router = Router()
 
 const pool = require('../database')
 const apikey = require('../uuid-apikey')
-const checkApiKey = require('./checkApiKeys')
+const checkApiKey = require('./checkApiKeysParams')
+
 
 router.get('/', (req,res,next) => {
   res.status(418).send("I'm waiting for the manual")

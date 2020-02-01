@@ -51,7 +51,7 @@ router.post('/signup', async (req,res) => {
   }
 })
 
-router.post('/signin',checkUUID, async (req,res) => {
+router.post('/signin',checkApiKeys,checkUUID, async (req,res) => {
 
   try {
     const { appkey,uuid } = req.body
