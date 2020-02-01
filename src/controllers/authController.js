@@ -5,6 +5,7 @@ const path = require('path')
 const jwt = require('jsonwebtoken')
 
 
+
 const httpErrors = require('../http-errors')
 const pool = require('../database')
 const apikey = require('../uuid-apikey')
@@ -15,7 +16,7 @@ const checkUUID = require('./checkUUID')
 
 
 router.get('/', (req,res) => {
-  res.status(200).send('This is index. I\'m waiting for html manual')
+  res.sendFile(path.join(__dirname+'/../../README.html'))
 })
 
 router.post('/signup', async (req,res) => {
@@ -61,6 +62,8 @@ router.post('/signin',checkApiKeys,checkUUID, async (req,res) => {
       'SELECT u.*, a.* FROM apiusers u, applications a WHERE u.applicationkey = a.idapplications AND u.uuid = ? AND a.apikey = ?',
       [uuid,appkey]
     )
+    
+    conn.release()
 
     if( user[0] !== undefined )
     {
@@ -97,6 +100,8 @@ router.post('/signinwithemailpassword', async (req,res) => {
       'SELECT u.*, a.* from apiusers u, applications a WHERE u.applicationkey = a.idapplications AND u.email = ? AND a.apikey = ?',
       [email,appkey], 
     )
+
+    conn.release()  
 
     if( user[0] !== undefined )
     {
@@ -139,6 +144,8 @@ router.post('/signinwithemailpassword', async (req,res) => {
   
 })
 
-
+router.post('/checktoken',verifyToken, (req, res) => {
+  res.status(200).json({checktoken:true})
+})
 
 module.exports = router
