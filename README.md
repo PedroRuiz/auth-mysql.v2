@@ -25,4 +25,4 @@ Content-Type: application/json
 ~~~
 
 ---
-Copyleft <img src="https://techcontracts.com/sitefiles/wp-content/uploads/2018/01/Copyleft_image-300x300.jpg" width=10> 2020 Pedro Ruiz-Hidalgo, Twitter: **@pedroruizhidalg**
+<span style="font-size:0.85em;">Copyleft <img src="https://techcontracts.com/sitefiles/wp-content/uploads/2018/01/Copyleft_image-300x300.jpg" width=10> 2020 Pedro Ruiz-Hidalgo, Twitter: **@pedroruizhidalg**</span>
