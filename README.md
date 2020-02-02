@@ -22,3 +22,6 @@ Headers management is very simple: Each one must contain:
 ~~~
 Content-Type: application/json
 ~~~
+
+---
+Copyleft 🄯 2020 Pedro Ruiz-Hidalgo, Twitter: **@pedroruizhidalg**
