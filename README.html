@@ -284,39 +284,51 @@ pre[data-line] .line-highlight[data-end]:after {
 <tbody>
 <tr>
 <td>/apps/create</td>
-<td>POST</td>
-<td>{ name }</td>
-<td>{apikey: apiKey, expiration_time, active:true, affectedRows : newApp.affectedRows}</td>
+<td><code>POST</code></td>
+<td><code>{ name }</code></td>
+<td><code>{apikey: apiKey, expiration_time, active:true, affectedRows : newApp.affectedRows}</code></td>
 </tr>
 <tr>
 <td>/application/:appkey</td>
-<td>GET</td>
+<td><code>GET</code></td>
 <td><strong>void</strong></td>
-<td><strong>if app is active:</strong> {apikey,name,create_time,end_time,active}</td>
+<td><strong>if app is active:</strong> <code>{apikey,name,create_time,end_time,active}</code></td>
+</tr>
+<tr>
+<td>/application/getuuid/:apikey</td>
+<td><code>GET</code></td>
+<td><strong>void</strong></td>
+<td><code>{uuid}</code></td>
+</tr>
+<tr>
+<td>/apps/application/delete</td>
+<td><code>DELETE</code></td>
+<td><code>{appkey,uuid}</code></td>
+<td><code>{&quot;affectedRows: 1,message: &quot;All users of this application was deleted too&quot;}</code></td>
 </tr>
 <tr>
 <td>/signup</td>
-<td>POST</td>
-<td>{applicationkey,username,email,password,enddate}</td>
-<td>{uuid,token}</td>
+<td><code>POST</code></td>
+<td><code>{applicationkey,username,email,password,enddate}</code></td>
+<td><code>{uuid,token}</code></td>
 </tr>
 <tr>
 <td>/signin</td>
-<td>POST</td>
-<td>{appkey,uuid}</td>
-<td>{uuid,token}</td>
+<td><code>POST</code></td>
+<td><code>{appkey,uuid}</code></td>
+<td><code>{uuid,token}</code></td>
 </tr>
 <tr>
 <td>/signwithemailpassword</td>
-<td>POST</td>
-<td>{appkey,email,password}</td>
-<td>{uuid,token}</td>
+<td><code>POST</code></td>
+<td><code>{appkey,email,password}</code></td>
+<td><code>{uuid,token}</code></td>
 </tr>
 <tr>
 <td>/checktoken</td>
-<td>POST</td>
-<td>{token}</td>
-<td>{checktoken: true}</td>
+<td><code>POST</code></td>
+<td><code>{token}</code></td>
+<td><code>{checktoken: true}</code></td>
 </tr>
 </tbody>
 </table>
@@ -325,7 +337,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Headers management is very simple: Each one must contain:</p>
 <pre data-role="codeBlock" data-info="json" class="language-json">Content-Type<span class="token operator">:</span> application/json
 </pre><hr>
-<p>Copyleft <img src="https://techcontracts.com/sitefiles/wp-content/uploads/2018/01/Copyleft_image-300x300.jpg" width="15"> 2020 Pedro Ruiz-Hidalgo, Twitter: <strong>@pedroruizhidalg</strong></p>
+<p>Copyleft <img src="https://techcontracts.com/sitefiles/wp-content/uploads/2018/01/Copyleft_image-300x300.jpg" width="10"> 2020 Pedro Ruiz-Hidalgo, Twitter: <strong>@pedroruizhidalg</strong></p>
 
       </div>
       
