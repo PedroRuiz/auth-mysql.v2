@@ -19,9 +19,9 @@ This is a very effective and complete application to manage users of a given app
 
 ## Headers
 Headers management is very simple: Each one must contain:
-~~~
+~~~json
 Content-Type: application/json
 ~~~
 
 ---
-Copyleft 🄯 2020 Pedro Ruiz-Hidalgo, Twitter: **@pedroruizhidalg**
+Copyleft <img src="https://techcontracts.com/sitefiles/wp-content/uploads/2018/01/Copyleft_image-300x300.jpg" width=15> 2020 Pedro Ruiz-Hidalgo, Twitter: **@pedroruizhidalg**
