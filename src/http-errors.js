@@ -1,7 +1,7 @@
 module.exports = httStatus = {
     "100" : {
       "type" : 'Informational responses',
-      "code" : "200",
+      "code" : "100",
       "message" : "Continue",
       "meaning" : "This interim response indicates that everything so far is OK and that the client should continue the request, or ignore the response if the request is already finished."
     },
