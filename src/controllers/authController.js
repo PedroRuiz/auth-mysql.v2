@@ -16,7 +16,11 @@ const checkUUID = require('./checkUUID')
 
 
 router.get('/', (req,res) => {
-  res.sendFile(path.join(__dirname+'/../../README.html'))
+  try {
+    res.sendFile(path.join(__dirname+'/../../README.html'))
+  } catch(err) {
+    res.status(500).send("*** E R R O R ***\n"+err)
+  }
 })
 
 router.post('/signup', async (req,res) => {
@@ -48,7 +52,7 @@ router.post('/signup', async (req,res) => {
 
   } catch( err )
   {
-    res.send("*** E R R O R ***\n"+err)
+    res.status(500).send("*** E R R O R ***\n"+err)
   }
 })
 
@@ -56,10 +60,10 @@ router.post('/signin',checkApiKeys,checkUUID, async (req,res) => {
 
   try {
     const { appkey,uuid } = req.body
-  
+    
     const conn = await pool.getConnection()
     user = await conn.query(
-      'SELECT u.*, a.* FROM apiusers u, applications a WHERE u.applicationkey = a.idapplications AND u.uuid = ? AND a.apikey = ?',
+      'SELECT u.*, a.* FROM apiusers u, applications a WHERE u.applicationkey = a.idapplications AND u.uuid = ? AND a.apikey = ? AND u.active = 1 AND now() BETWEEN u.startdate AND u.enddate AND a.active = 1 and now() BETWEEN a.create_time and a.end_time',
       [uuid,appkey]
     )
     
@@ -86,8 +90,8 @@ router.post('/signin',checkApiKeys,checkUUID, async (req,res) => {
     }
   
   
-  } catch( e ) {
-    res.status(500).json(e)
+  } catch( err ) {
+    res.status(500).send("*** E R R O R ***\n"+err)
   }
 })
 
@@ -97,7 +101,7 @@ router.post('/signinwithemailpassword', async (req,res) => {
   try {
     const conn = await pool.getConnection()
     user = await conn.query(
-      'SELECT u.*, a.* from apiusers u, applications a WHERE u.applicationkey = a.idapplications AND u.email = ? AND a.apikey = ?',
+      'SELECT u.*, a.* from apiusers u, applications a WHERE u.applicationkey = a.idapplications AND u.email = ? AND a.apikey = ? AND u.active = 1 AND now() BETWEEN u.startdate AND u.enddate AND a.active = 1 and now() BETWEEN a.create_time and a.end_time',
       [email,appkey], 
     )
 
@@ -136,9 +140,9 @@ router.post('/signinwithemailpassword', async (req,res) => {
     }
 
     
-  } catch( e )
+  } catch( err )
   {
-    res.status(500).json(e)
+    res.status(500).send("*** E R R O R ***\n"+err)
   }
 
   
